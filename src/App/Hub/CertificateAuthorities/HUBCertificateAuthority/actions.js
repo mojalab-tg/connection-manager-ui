@@ -52,6 +52,7 @@ export const storeHubCa = () => async (dispatch, getState) => {
 
 export const submitHubCa = () => async (dispatch, getState) => {
   const body = getHubCaModel(getState());
+  console.log('submitHubCa', body);
   const { status, data } = await dispatch(api.hubCa.create({ body }));
   if (is200(status)) {
     dispatch(showSuccessToast());

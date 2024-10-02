@@ -79,6 +79,19 @@ export const getHubCaModel = createSelector(
   getHubCaNameModel,
   getHubCaHosts,
   (nameModel, hosts) => ({
+    CN: nameModel.commonName,
+    O: nameModel.organization,
+    OU: nameModel.organizationUnit,
+    C: nameModel.country,
+    ST: nameModel.state,
+    L: nameModel.locality,
+  })
+);
+// before custom
+export const getHubCaModel_v1 = createSelector(
+  getHubCaNameModel,
+  getHubCaHosts,
+  (nameModel, hosts) => ({
     default: {
       expiry: '43800h',
       usages: ['signing', 'key encipherment', 'client auth'],
