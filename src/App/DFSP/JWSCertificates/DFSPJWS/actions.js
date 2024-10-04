@@ -56,7 +56,10 @@ export const submitDfspJWSCertificates = () => async (dispatch, getState) => {
   const dfspId = getDfspId(getState());
   const jwsCertificate = getDfspJWSJwsCertificate(getState());
   const intermediateChain = getDfspJWSIntermediateChain(getState());
-  const body = { jwsCertificate, intermediateChain };
+  console.log('submitDfspJWSCertificates jwsCertificate', jwsCertificate);
+  console.log('submitDfspJWSCertificates intermediateChain', intermediateChain);
+  // custom
+  const body = { publicKey: jwsCertificate};
   let status;
   let data;
   if (getIsDfspJWSEditingExisitingModel(getState())) {
