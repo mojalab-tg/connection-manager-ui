@@ -19,87 +19,98 @@ export const getIsHubCaModalVisible = state => state.hub.ca.hub.isHubCaModalVisi
 export const getIsHubCaPending = createPendingSelector('hubCa.create');
 
 export const getIsHubCaMissing = createSelector(
-  getHubCaRootCertificate,
-  testers.isNil
+    getHubCaRootCertificate,
+    testers.isNil
 );
 
 const buildCaModel = (commonName, organization, organizationUnit, locality, state, country) => ({
-  commonName,
-  organization,
-  organizationUnit,
-  locality,
-  state,
-  country,
+    commonName,
+    organization,
+    organizationUnit,
+    locality,
+    state,
+    country,
 });
 
 const getHubCaNameModel = createSelector(
-  getHubCaCommonName,
-  getHubCaOrganization,
-  getHubCaOrganizationUnit,
-  getHubCaLocality,
-  getHubCaState,
-  getHubCaCountry,
-  buildCaModel
+    getHubCaCommonName,
+    getHubCaOrganization,
+    getHubCaOrganizationUnit,
+    getHubCaLocality,
+    getHubCaState,
+    getHubCaCountry,
+    buildCaModel
 );
 
 export const getHubCaHostsValidationResult = createSelector(
-  getHubCaHosts,
-  getHubCaHostValidation,
-  (hosts, hostValidation) => hosts.map(host => validate(host, hostValidation))
+    getHubCaHosts,
+    getHubCaHostValidation,
+    (hosts, hostValidation) => hosts.map(host => validate(host, hostValidation))
 );
 
 export const getHubCaModelValidationResult = createSelector(
-  getHubCaNameModel,
-  getHubCaNameValidation,
-  toValidationResult
+    getHubCaNameModel,
+    getHubCaNameValidation,
+    toValidationResult
 );
 
 const getAreHubCaHostsValid = createSelector(
-  getHubCaHostsValidationResult,
-  results => results.every(getIsValid)
+    getHubCaHostsValidationResult,
+    results => results.every(getIsValid)
 );
 
 const getIsHubCaModelValid = createSelector(
-  getHubCaModelValidationResult,
-  getIsValid
+    getHubCaModelValidationResult,
+    getIsValid
 );
 const getIsHubCaFormValid = createSelector(
-  getIsHubCaModelValid,
-  getAreHubCaHostsValid,
-  testers.getAllAre(true)
+    getIsHubCaModelValid,
+    getAreHubCaHostsValid,
+    testers.getAllAre(true)
 );
 
 export const getIsHubCaSubmitEnabled = createSelector(
-  getIsHubCaFormValid,
-  getHubCaRootCertificate,
-  (isValid, hasCertificate) => isValid && !hasCertificate
+    getIsHubCaFormValid,
+    getHubCaRootCertificate,
+    (isValid, hasCertificate) => isValid && !hasCertificate
 );
 
 export const getHubCaModel = createSelector(
-  getHubCaNameModel,
-  getHubCaHosts,
-  (nameModel, hosts) => ({
-    default: {
-      expiry: '43800h',
-      usages: ['signing', 'key encipherment', 'client auth'],
-      signature_algorithm: 'SHA256WithRSA',
-    },
-    csr: {
-      hosts,
-      names: [
+    getHubCaNameModel,
+    getHubCaHosts,
+    (nameModel, hosts) => (
+
+        // {
+        //     default: {
+        //         expiry: '43800h',
+        //         usages: ['signing', 'key encipherment', 'client auth'],
+        //         signature_algorithm: 'SHA256WithRSA',
+        //     },
+        //     csr: {
+        //         hosts,
+        //         names: [{
+        //             CN: nameModel.commonName,
+        //             O: nameModel.organization,
+        //             OU: nameModel.organizationUnit,
+        //             C: nameModel.country,
+        //             ST: nameModel.state,
+        //             L: nameModel.locality,
+        //         }, ],
+        //         key: {
+        //             size: 4096,
+        //             algo: 'rsa',
+        //         },
+        //     },
+        // }
+
         {
-          CN: nameModel.commonName,
-          O: nameModel.organization,
-          OU: nameModel.organizationUnit,
-          C: nameModel.country,
-          ST: nameModel.state,
-          L: nameModel.locality,
-        },
-      ],
-      key: {
-        size: 4096,
-        algo: 'rsa',
-      },
-    },
-  })
+            CN: nameModel.commonName,
+            O: nameModel.organization,
+            OU: nameModel.organizationUnit,
+            C: nameModel.country,
+            ST: nameModel.state,
+            L: nameModel.locality,
+        }
+
+    )
 );

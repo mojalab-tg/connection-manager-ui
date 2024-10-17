@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/modusintegration/tsp#readme",
   "dependencies": {
+    "connection_manager_server": "file:",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "otplib": "^11.0.1",

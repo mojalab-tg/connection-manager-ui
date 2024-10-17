@@ -37,31 +37,33 @@ export const setHubCaInfo = createAction(SET_HUB_CA_ROOT_CERTIFICATE_INFO);
 export const showHubCaModal = createAction(SHOW_HUB_CA_ROOT_CERTIFICATE_MODAL);
 export const hideHubCaModal = createAction(HIDE_HUB_CA_ROOT_CERTIFICATE_MODAL);
 
-export const storeHubCa = () => async (dispatch, getState) => {
-  const { data, status } = await dispatch(api.hubCa.read());
-  if (is200(status) || is404(status)) {
-    if (data.type === 'INTERNAL') {
-      const { rootCertificate, rootCertificateInfo } = data;
-      dispatch(setHubCa(rootCertificate));
-      dispatch(setHubCaInfo(rootCertificateInfo));
+export const storeHubCa = () => async(dispatch, getState) => {
+    const { data, status } = await dispatch(api.hubCa.read());
+    if (is200(status) || is404(status)) {
+        if (data.type === 'INTERNAL') {
+            const { rootCertificate, rootCertificateInfo } = data;
+            dispatch(setHubCa(rootCertificate));
+            dispatch(setHubCaInfo(rootCertificateInfo));
+        }
+    } else {
+        dispatch(setHubCaError(data));
     }
-  } else {
-    dispatch(setHubCaError(data));
-  }
 };
 
-export const submitHubCa = () => async (dispatch, getState) => {
-  const body = getHubCaModel(getState());
-  const { status, data } = await dispatch(api.hubCa.create({ body }));
-  if (is200(status)) {
-    dispatch(showSuccessToast());
-    dispatch(storeHubCa());
-  } else {
-    dispatch(showErrorModal({ status, data }));
-  }
+export const submitHubCa = () => async(dispatch, getState) => {
+
+    const body = getHubCaModel(getState());
+
+    const { status, data } = await dispatch(api.hubCa.create({ body }));
+    if (is200(status)) {
+        dispatch(showSuccessToast());
+        dispatch(storeHubCa());
+    } else {
+        dispatch(showErrorModal({ status, data }));
+    }
 };
 
 export const downloadHubCa = () => (dispatch, getState) => {
-  const chain = getHubCaRootCertificate(getState());
-  downloadFile(chain, `ca_chain.pem`);
+    const chain = getHubCaRootCertificate(getState());
+    downloadFile(chain, `ca_chain.pem`);
 };
