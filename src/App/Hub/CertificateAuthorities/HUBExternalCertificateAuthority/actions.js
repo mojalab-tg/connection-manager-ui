@@ -3,11 +3,12 @@ import api from 'utils/api';
 import { is200, is404 } from 'utils/http';
 import { downloadFile } from 'utils/html';
 import { showSuccessToast, showErrorModal } from 'App/actions';
-import { getHubExternalCaRootCertificate, getHubExternalCaIntermediateChain, getHubExternalCaName } from './selectors';
+import { getHubExternalCaRootCertificate, getHubExternalCaIntermediateChain, getHubExternalCaName, getHubExternalCaPrivateKey } from './selectors';
 
 export const RESET_HUB_EXTERNAL_CA = 'HUB EXTERNAL CA / Reset';
 export const SET_HUB_EXTERNAL_CA_ERROR = 'HUB EXTERNAL CA / Set Root Cert Error';
 export const SET_HUB_EXTERNAL_CA_CERTIFICATE = 'HUB EXTERNAL CA / Set Certificate';
+export const SET_HUB_EXTERNAL_CA_PRIVATE_KEY = 'HUB EXTERNAL CA / Set Private Key'; // custom
 export const SET_HUB_EXTERNAL_CA_ROOT_CERTIFICATE = 'HUB EXTERNAL CA / Set Root Certificate';
 export const SET_HUB_EXTERNAL_CA_INTERMEDIATE_CHAIN = 'HUB EXTERNAL CA / Set Intermediate Chain';
 export const SET_HUB_EXTERNAL_CA_NAME = 'HUB EXTERNAL CA / Set Name';
@@ -20,6 +21,7 @@ export const HIDE_HUB_EXTERNAL_CA_INTERMEDIATE_CHAIN_MODAL = 'HUB EXTERNAL CA / 
 export const resetHubExternalCa = createAction(RESET_HUB_EXTERNAL_CA);
 export const setHubExternalCaError = createAction(SET_HUB_EXTERNAL_CA_ERROR);
 export const setHubExternalCaCertificate = createAction(SET_HUB_EXTERNAL_CA_CERTIFICATE);
+export const setHubExternalCaPrivatekey = createAction(SET_HUB_EXTERNAL_CA_PRIVATE_KEY);
 export const setHubExternalCaRootCertificate = createAction(SET_HUB_EXTERNAL_CA_ROOT_CERTIFICATE);
 export const setHubExternalCaIntermediateChain = createAction(SET_HUB_EXTERNAL_CA_INTERMEDIATE_CHAIN);
 export const setHubExternalCaName = createAction(SET_HUB_EXTERNAL_CA_NAME);
@@ -44,13 +46,17 @@ export const submitHubExternalCa = () => async (dispatch, getState) => {
   const name = getHubExternalCaName(getState());
   const rootCertificate = getHubExternalCaRootCertificate(getState());
   const intermediateChain = getHubExternalCaIntermediateChain(getState());
+  // custom
+  const privateKey = getHubExternalCaPrivateKey(getState());
   const body = {
     name,
+    privateKey,
     rootCertificate,
     intermediateChain,
     type: 'EXTERNAL',
   };
-  const { status, data } = await dispatch(api.hubCa.create({ body }));
+  // custom
+  const { status, data } = await dispatch(api.hubCa.update({ body }));
   if (is200(status)) {
     dispatch(showSuccessToast());
     dispatch(resetHubExternalCaForm());

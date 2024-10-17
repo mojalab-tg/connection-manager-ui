@@ -8,6 +8,7 @@ const isRequiredIfNotSet = (depending, value) =>
 export const getHubExternalCaValidators = (name, isNameUnique, rootCertificate, intermediateChain) => {
   const validators = {
     name: createValidation([vd.isRequired, uniqueNameValidator(name, isNameUnique)]),
+    privatekey: createValidation([vd.isRequired]), // custom
   };
 
   if (!rootCertificate) {

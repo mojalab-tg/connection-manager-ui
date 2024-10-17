@@ -15,6 +15,7 @@ import {
   showHubExternalCaRootCertificateModal,
   hideHubExternalCaRootCertificateModal,
   setHubExternalCaIntermediateChain,
+  setHubExternalCaPrivatekey, // custom
   downloadHubExternalCaIntermediateChain,
   showHubExternalCaIntermediateChainModal,
   hideHubExternalCaIntermediateChainModal,
@@ -25,6 +26,7 @@ import {
   getHubExternalCaError,
   getHubExternalCaCertificate,
   getHubExternalCaRootCertificate,
+  getHubExternalCaPrivateKey, // private
   getHubExternalCaIntermediateChain,
   getHubExternalCaName,
   getHubExternalCaValidationResult,
@@ -44,6 +46,7 @@ const stateProps = state => ({
   error: getHubExternalCaError(state),
   certificate: getHubExternalCaCertificate(state),
   rootCertificate: getHubExternalCaRootCertificate(state),
+  privateKey: getHubExternalCaPrivateKey(state),
   intermediateChain: getHubExternalCaIntermediateChain(state),
   name: getHubExternalCaName(state),
   validation: getHubExternalCaValidationResult(state),
@@ -58,11 +61,12 @@ const stateProps = state => ({
 });
 
 const actionProps = dispatch => ({
-  onRootCertificateChange: cert => dispatch(setHubExternalCaRootCertificate(cert)),
+  onRootCertificateChange: cert => {console.log(cert); return dispatch(setHubExternalCaRootCertificate(cert))},
   onRootCertificateViewClick: cert => dispatch(showHubExternalCaRootCertificateModal(cert)),
   onRootCertificateDownloadClick: (content, name) => dispatch(downloadHubExternalCaRootCertificate(content, name)),
   onRootCertificateModalCloseClick: () => dispatch(hideHubExternalCaRootCertificateModal()),
   onIntermediateChainChange: cert => dispatch(setHubExternalCaIntermediateChain(cert)),
+  onPrivatekeyChange: cert => {console.log(cert); return dispatch(setHubExternalCaPrivatekey(cert))}, // custom
   onIntermediateChainDownloadClick: (content, name) => dispatch(downloadHubExternalCaIntermediateChain(content, name)),
   onIntermediateChainViewClick: cert => dispatch(showHubExternalCaIntermediateChainModal(cert)),
   onIntermediateChainModalCloseClick: () => dispatch(hideHubExternalCaIntermediateChainModal()),
@@ -74,6 +78,7 @@ const HubExternalUploadCertificateAuthority = ({
   error,
   certificate,
   rootCertificate,
+  privateKey,
   intermediateChain,
   name,
   validation,
@@ -91,6 +96,7 @@ const HubExternalUploadCertificateAuthority = ({
   onRootCertificateDownloadClick,
   onRootCertificateModalCloseClick,
   onIntermediateChainChange,
+  onPrivatekeyChange,
   onIntermediateChainViewClick,
   onIntermediateChainDownloadClick,
   onIntermediateChainModalCloseClick,
@@ -122,6 +128,23 @@ const HubExternalUploadCertificateAuthority = ({
         />
       </div>
 
+      <div className="hub__hub-external-ca__root-certificate">
+        <FormInput
+          type="file"
+          label="Root Certificate private Key"
+          parseFileAsText
+          onChange={onPrivatekeyChange}
+          validation={validation.fields.privateKey}
+          elementWidth="400px"
+          value={privateKey || null}
+        />
+        {/* {privateKey && (
+          <FileControls
+            onViewClick={() => onRootCertificateViewClick(rootCertificate)}
+            onDownloadClick={() => onRootCertificateDownloadClick(rootCertificate)}
+          />
+        )} */}
+      </div>
       <div className="hub__hub-external-ca__root-certificate">
         <FormInput
           type="file"
