@@ -118,7 +118,7 @@ const DfspJWS = ({
         <div className="dfsp__dfsp-jws__jws-certificate">
           <FormInput
             type="file"
-            label="JWS Certificate"
+            label="JWS Certificate 1"
             parseFileAsText
             onChange={onJwsCertificateChange}
             elementWidth="400px"

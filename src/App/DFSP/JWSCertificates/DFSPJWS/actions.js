@@ -53,6 +53,7 @@ export const storeDfspJWSCertificates = () => async(dispatch, getState) => {
     }
 };
 
+<<<<<<< HEAD
 export const submitDfspJWSCertificates = () => async(dispatch, getState) => {
     const dfspId = getDfspId(getState());
     const publicKey = getDfspJWSJwsCertificate(getState());
@@ -76,6 +77,34 @@ export const submitDfspJWSCertificates = () => async(dispatch, getState) => {
     } else {
         dispatch(showErrorModal({ status, data }));
     }
+=======
+export const submitDfspJWSCertificates = () => async (dispatch, getState) => {
+  const dfspId = getDfspId(getState());
+  const jwsCertificate = getDfspJWSJwsCertificate(getState());
+  const intermediateChain = getDfspJWSIntermediateChain(getState());
+  console.log('submitDfspJWSCertificates jwsCertificate', jwsCertificate);
+  console.log('submitDfspJWSCertificates intermediateChain', intermediateChain);
+  // custom
+  const body = { publicKey: jwsCertificate};
+  let status;
+  let data;
+  if (getIsDfspJWSEditingExisitingModel(getState())) {
+    ({ status, data } = await dispatch(api.dfspJWSCerts.update({ dfspId, body })));
+  } else {
+    ({ status, data } = await dispatch(api.dfspJWSCerts.create({ dfspId, body })));
+  }
+  if (is200(status)) {
+    dispatch(showSuccessToast());
+    dispatch(setDfspJWSJwsCertificate(get(data, 'jwsCertificate')));
+    dispatch(setDfspJWSIntermediateChain(get(data, 'intermediateChain')));
+    dispatch(setDfspJWSJwsCertificateInfo(get(data, 'jwsCertificateInfo')));
+    dispatch(setDfspJWSIntermediateChainInfo(get(data, 'intermediateChainInfo[0]')));
+    dispatch(setDfspJWSValidations(get(data, 'validations')));
+    dispatch(setDfspJWSValidationState(get(data, 'validationState')));
+  } else {
+    dispatch(showErrorModal({ status, data }));
+  }
+>>>>>>> origin/dev_hamid
 };
 
 export const downloadDfspJWSJwsCertificate = () => (dispatch, getState) => {
