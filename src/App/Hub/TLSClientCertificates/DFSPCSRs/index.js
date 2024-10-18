@@ -63,8 +63,10 @@ const actionProps = dispatch => ({
   onMount: () => dispatch(storeHubDfspCsrs()),
   onFilterChange: value => dispatch(setHubDfspCsrsFilter(value)),
   onCASignDfspCsrClick: (dfspId, enrollmentId) => dispatch(submitCASignHubDfspCsr(dfspId, enrollmentId)),
-  onCertificateSignDfspCsrClick: (dfspId, enrollmentId) =>
-    dispatch(showHubDfspCsrsCertificateUploadModal({ dfspId, enrollmentId })),
+  onCertificateSignDfspCsrClick: (dfspId, enrollmentId) => {
+    console.log('onCertificateSignDfspCsrClick', dfspId, enrollmentId)
+    dispatch(showHubDfspCsrsCertificateUploadModal({ dfspId, enrollmentId }))
+  },
   onCertificateViewClick: (certificate, title) => dispatch(showHubDfspCsrsCertificateModal({ certificate, title })),
   onCertificateDownloadClick: (certificate, dfspName, cn, extension) =>
     dispatch(downloadHubDfspCsrCertificate(certificate, dfspName, cn, extension)),

@@ -79,7 +79,7 @@ export const getHubDfspCsrsCertificateUploadModalEnrollmentId = state =>
 export const getHubDfspCsrsCertificateUploadModalCas = createSelector(
   state => state.hub.ca.external.hubExternalCertificates,
   caCertificates =>
-    caCertificates.map(({ id, name }) => ({
+    (caCertificates || []).map(({ id, name }) => ({ // custom
       label: name,
       value: id,
     }))
