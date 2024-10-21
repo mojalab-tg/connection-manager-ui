@@ -45,44 +45,44 @@ const CertificateUploadModal = ({
   onHubCaIdChange,
   onSubmit,
   onClose,
-}) => (
-  <Modal
-    title="Upload certificate"
-    primaryAction="Save"
-    width="800px"
-    allowSubmit
-    isSubmitEnabled={isSubmitEnabled}
-    isSubmitPending={isSubmitPending}
-    onSubmit={onSubmit}
-    onClose={onClose}
-  >
-    <div>
-      <div className="hub__hub-dfsp-csrs__upload-modal__certificate">
-        <FormInput
-          type="file"
-          label="Certificate"
-          parseFileAsText
-          onChange={onCertificateChange}
-          value={certificate || null}
-          validation={validation.fields.certificate}
-        />
-      </div>
-      <div className="hub__hub-dfsp-csrs__upload-modal__ca-id">
-        <FormInput
-          type="select"
-          label="External CA"
-          parseFileAsText
-          onChange={onHubCaIdChange}
-          options={externalCas}
-          value={hubCAId || null}
-          validation={validation.fields.hubCAId}
-        />
-      </div>
-    </div>
-  </Modal>
-);
+}) => {
+  console.log('externalCas:', externalCas); // Ajoutez ce log pour déboguer
+  return (
+    <Modal
+      title="Upload certificate"
+      primaryAction="Save"
+      width="800px"
+      allowSubmit
+      isSubmitEnabled={isSubmitEnabled}
+      isSubmitPending={isSubmitPending}
+      onSubmit={onSubmit}
+      onClose={onClose}
+    >
+      <div>
+        <div className="hub__hub-dfsp-csrs__upload-modal__certificate">
+          <FormInput
+            type="file"
+            label="Certificate"
+            parseFileAsText
+            onChange={onCertificateChange}
+            value={certificate || null}
+            validation={validation.fields.certificate}
+          />{' '}
+        </div>{' '}
+        <div className="hub__hub-dfsp-csrs__upload-modal__ca-id">
+          <FormInput
+            type="select"
+            label="External CA"
+            parseFileAsText
+            onChange={onHubCaIdChange}
+            options={externalCas}
+            value={hubCAId || null}
+            //validation = { validation.fields.hubCAId }
+          />{' '}
+        </div>{' '}
+      </div>{' '}
+    </Modal>
+  );
+};
 
-export default connect(
-  stateProps,
-  actionProps
-)(CertificateUploadModal);
+export default connect(stateProps, actionProps)(CertificateUploadModal);

@@ -76,68 +76,37 @@ export const getIsHubCaSubmitEnabled = createSelector(
 );
 
 export const getHubCaModel = createSelector(
-<<<<<<< HEAD
     getHubCaNameModel,
     getHubCaHosts,
-    (nameModel, hosts) => (
-
-        // {
-        //     default: {
-        //         expiry: '43800h',
-        //         usages: ['signing', 'key encipherment', 'client auth'],
-        //         signature_algorithm: 'SHA256WithRSA',
-        //     },
-        //     csr: {
-        //         hosts,
-        //         names: [{
-        //             CN: nameModel.commonName,
-        //             O: nameModel.organization,
-        //             OU: nameModel.organizationUnit,
-        //             C: nameModel.country,
-        //             ST: nameModel.state,
-        //             L: nameModel.locality,
-        //         }, ],
-        //         key: {
-        //             size: 4096,
-        //             algo: 'rsa',
-        //         },
-        //     },
-        // }
-
-=======
-  getHubCaNameModel,
-  getHubCaHosts,
-  (nameModel, hosts) => ({
-    CN: nameModel.commonName,
-    O: nameModel.organization,
-    OU: nameModel.organizationUnit,
-    C: nameModel.country,
-    ST: nameModel.state,
-    L: nameModel.locality,
-  })
+    (nameModel, hosts) => ({
+        CN: nameModel.commonName,
+        O: nameModel.organization,
+        OU: nameModel.organizationUnit,
+        C: nameModel.country,
+        ST: nameModel.state,
+        L: nameModel.locality,
+    })
 );
 // before custom
 export const getHubCaModel_v1 = createSelector(
-  getHubCaNameModel,
-  getHubCaHosts,
-  (nameModel, hosts) => ({
-    default: {
-      expiry: '43800h',
-      usages: ['signing', 'key encipherment', 'client auth'],
-      signature_algorithm: 'SHA256WithRSA',
-    },
-    csr: {
-      hosts,
-      names: [
->>>>>>> origin/dev_hamid
-        {
-            CN: nameModel.commonName,
-            O: nameModel.organization,
-            OU: nameModel.organizationUnit,
-            C: nameModel.country,
-            ST: nameModel.state,
-            L: nameModel.locality,
+    getHubCaNameModel,
+    getHubCaHosts,
+    (nameModel, hosts) => ({
+        default: {
+            expiry: '43800h',
+            usages: ['signing', 'key encipherment', 'client auth'],
+            signature_algorithm: 'SHA256WithRSA',
+        },
+        csr: {
+            hosts,
+            names: [{
+                CN: nameModel.commonName,
+                O: nameModel.organization,
+                OU: nameModel.organizationUnit,
+                C: nameModel.country,
+                ST: nameModel.state,
+                L: nameModel.locality,
+            }]
         }
-
-    )
+    })
 );

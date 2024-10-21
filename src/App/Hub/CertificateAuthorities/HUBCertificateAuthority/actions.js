@@ -50,11 +50,9 @@ export const storeHubCa = () => async(dispatch, getState) => {
     }
 };
 
-<<<<<<< HEAD
 export const submitHubCa = () => async(dispatch, getState) => {
-
     const body = getHubCaModel(getState());
-
+    console.log('submitHubCa', body);
     const { status, data } = await dispatch(api.hubCa.create({ body }));
     if (is200(status)) {
         dispatch(showSuccessToast());
@@ -62,18 +60,6 @@ export const submitHubCa = () => async(dispatch, getState) => {
     } else {
         dispatch(showErrorModal({ status, data }));
     }
-=======
-export const submitHubCa = () => async (dispatch, getState) => {
-  const body = getHubCaModel(getState());
-  console.log('submitHubCa', body);
-  const { status, data } = await dispatch(api.hubCa.create({ body }));
-  if (is200(status)) {
-    dispatch(showSuccessToast());
-    dispatch(storeHubCa());
-  } else {
-    dispatch(showErrorModal({ status, data }));
-  }
->>>>>>> origin/dev_hamid
 };
 
 export const downloadHubCa = () => (dispatch, getState) => {

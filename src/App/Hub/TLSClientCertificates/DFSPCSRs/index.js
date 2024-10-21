@@ -116,12 +116,11 @@ const DFSPCSRsContainer = ({
   }
   return (
     <div className="hub-dfsp-csrs">
+      {' '}
       {isHubDfspCsrsPending && <PendingOverlay />}
-
       <div className="hub-sent-csrs__filter">
-        <TextField placeholder="Search DFSP CSRs" value={filter} onChange={onFilterChange} />
+        <TextField placeholder="Search DFSP CSRs" value={filter} onChange={onFilterChange} />{' '}
       </div>
-
       <DFSPCSRs
         csrs={csrs}
         isCertificateModalVisible={isCertificateModalVisible}
@@ -136,8 +135,7 @@ const DFSPCSRsContainer = ({
         onCertificateDownloadClick={onCertificateDownloadClick}
         onCertificateModalCloseClick={onCertificateModalCloseClick}
       />
-
-      {isCertificateUploadModalVisible && <CertificateUploadModal />}
+      {isCertificateUploadModalVisible && <CertificateUploadModal />}{' '}
     </div>
   );
 };
@@ -172,6 +170,7 @@ const DFSPCSRs = ({
   }
   return (
     <div>
+      {' '}
       {csrs.map(
         (
           {
@@ -206,20 +205,23 @@ const DFSPCSRs = ({
             isCASigningPending={isCASigningPendingByEnrollmentId[id]}
             isCertificateSigningPending={isCertificateSigningPending}
             onCASignClick={() => onCASignDfspCsrClick(dfspId, id)}
-            onCertificateSignClick={() => onCertificateSignDfspCsrClick(dfspId, id)}
+            onCertificateSignClick={() => {
+              //console.log("dfspId", dfspId)
+              //console.log("id", id)
+              return onCertificateSignDfspCsrClick(dfspId, id);
+            }}
             onViewClick={onCertificateViewClick}
             onDownloadClick={onCertificateDownloadClick}
           />
         )
       )}
-
       {isCertificateModalVisible && (
         <CertificateModal
           onClose={onCertificateModalCloseClick}
           content={certificateModalContent}
           title={certificateModalTitle}
         />
-      )}
+      )}{' '}
     </div>
   );
 };
@@ -248,10 +250,10 @@ const DFSPCSR = ({
     <CertificateCard.Box delay={index * 50}>
       <CertificateCard.Header>
         <CertificateCard.Details>
-          <CertificateCard.PrimaryDetail>{dfspName}</CertificateCard.PrimaryDetail>
-          <CertificateCard.SecondaryDetail>{csrInfo.subject.CN || 'CSR Common Name'}</CertificateCard.SecondaryDetail>
-          <Status.CSR state={state} />
-        </CertificateCard.Details>
+          <CertificateCard.PrimaryDetail> {dfspName} </CertificateCard.PrimaryDetail>{' '}
+          <CertificateCard.SecondaryDetail> {csrInfo.subject.CN || 'CSR Common Name'} </CertificateCard.SecondaryDetail>{' '}
+          <Status.CSR state={state} />{' '}
+        </CertificateCard.Details>{' '}
         <CertificateCard.Controls>
           <CertificateCard.ControlButton
             label="Upload Certificate"
@@ -265,7 +267,7 @@ const DFSPCSR = ({
             }
             onClick={onCertificateSignClick}
             pending={isCertificateSigningPending}
-          />
+          />{' '}
           <CertificateCard.ControlButton
             label="Use Provided CA To Sign CSR"
             icon="edit-small"
@@ -278,16 +280,15 @@ const DFSPCSR = ({
             }
             onClick={onCASignClick}
             pending={isCASigningPending}
-          />
-        </CertificateCard.Controls>
+          />{' '}
+        </CertificateCard.Controls>{' '}
       </CertificateCard.Header>
-
       <CertificateCard.Content>
         <div className="hub-dfsp-csrs__certificate-validation">
-          <CertificateValidation state={validationState} validations={validations} />
-        </div>
-        <CertificateInfo csrInfo={csrInfo} certInfo={certInfo} />
-      </CertificateCard.Content>
+          <CertificateValidation state={validationState} validations={validations} />{' '}
+        </div>{' '}
+        <CertificateInfo csrInfo={csrInfo} certInfo={certInfo} />{' '}
+      </CertificateCard.Content>{' '}
       <CertificateCard.Footer>
         <CertificateCard.FooterButton
           icon="studio-project-small"
@@ -295,13 +296,13 @@ const DFSPCSR = ({
           kind="secondary"
           noFill
           onClick={() => onViewClick(csr, 'CSR')}
-        />
+        />{' '}
         <CertificateCard.FooterButton
           icon="download-small"
           label="Download CSR"
           noFill
           onClick={() => onDownloadClick(csr, dfspName, csrInfo.subject.CN, '.csr')}
-        />
+        />{' '}
         <CertificateCard.FooterButton
           icon="studio-project-small"
           label="View Certificate"
@@ -309,28 +310,25 @@ const DFSPCSR = ({
           noFill
           onClick={() => onViewClick(certificate, 'Certificate')}
           disabled={!hasCertificate}
-        />
+        />{' '}
         <CertificateCard.FooterButton
           icon="download-small"
           label="Download Certificate"
           noFill
           onClick={() => onDownloadClick(certificate, dfspName, certInfo.subject.CN, '.cer')}
           disabled={!hasCertificate}
-        />
+        />{' '}
         {externalCa && (
           <MessageBox icon="info-small" size={16} fontSize={12} className="dfsp-sent-csrs__external-ca__message-box">
             <span>
-              Signed with external CA <i>{externalCa.name}</i>
-            </span>
+              Signed with external CA <i> {externalCa.name} </i>{' '}
+            </span>{' '}
           </MessageBox>
-        )}
-      </CertificateCard.Footer>
+        )}{' '}
+      </CertificateCard.Footer>{' '}
     </CertificateCard.Box>
   );
 };
 
 const MountedDFSPsCSRS = withMount(DFSPCSRsContainer, 'onMount');
-export default connect(
-  stateProps,
-  actionProps
-)(MountedDFSPsCSRS);
+export default connect(stateProps, actionProps)(MountedDFSPsCSRS);
