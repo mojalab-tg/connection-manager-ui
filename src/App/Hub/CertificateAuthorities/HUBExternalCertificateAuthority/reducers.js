@@ -4,6 +4,7 @@ import {
   SET_HUB_EXTERNAL_CA_ERROR,
   SET_HUB_EXTERNAL_CA_CERTIFICATE,
   SET_HUB_EXTERNAL_CA_ROOT_CERTIFICATE,
+  SET_HUB_EXTERNAL_CA_PRIVATE_KEY,
   SET_HUB_EXTERNAL_CA_INTERMEDIATE_CHAIN,
   SET_HUB_EXTERNAL_CA_NAME,
   RESET_HUB_EXTERNAL_CA_FORM,
@@ -17,6 +18,7 @@ const initialState = {
   hubExternalCaError: undefined,
   hubExternalCertificates: undefined,
   hubExternalCaRootCert: undefined,
+  hubExternalCaPrivateKey: undefined,// custom
   hubExternalCaIntermediateChain: undefined,
   hubExternalCaName: undefined,
   isHubExternalCaRootCertificateModalVisible: false,
@@ -39,6 +41,10 @@ const HubExternalCa = handleActions(
     [SET_HUB_EXTERNAL_CA_ROOT_CERTIFICATE]: (state, action) => ({
       ...state,
       hubExternalCaRootCert: action.payload,
+    }),// custom
+    [SET_HUB_EXTERNAL_CA_PRIVATE_KEY]: (state, action) => ({
+      ...state,
+      hubExternalCaPrivateKey: action.payload,
     }),
     [SET_HUB_EXTERNAL_CA_INTERMEDIATE_CHAIN]: (state, action) => ({
       ...state,

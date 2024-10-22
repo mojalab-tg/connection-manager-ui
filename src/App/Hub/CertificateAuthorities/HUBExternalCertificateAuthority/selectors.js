@@ -7,6 +7,7 @@ import { getHubExternalCaValidators } from './validators';
 export const getHubExternalCaError = state => state.hub.ca.external.hubExternalCaError;
 export const getHubExternalCaCertificate = state => state.hub.ca.external.hubExternalCertificate;
 export const getHubExternalCaRootCertificate = state => state.hub.ca.external.hubExternalCaRootCert;
+export const getHubExternalCaPrivateKey = state => state.hub.ca.external.hubExternalCaPrivateKey; // custom
 export const getHubExternalCaIntermediateChain = state => state.hub.ca.external.hubExternalCaIntermediateChain;
 export const getHubExternalCaName = state => state.hub.ca.external.hubExternalCaName;
 export const getIsHubExternalCaRootCertificateModalVisible = state =>
@@ -23,9 +24,10 @@ export const getIsHubExternalCasMissing = createSelector(
   certificate => certificate !== undefined
 );
 
-const buildHubExternalCaModel = (rootCertificate, intermediateChain, name) => ({
+const buildHubExternalCaModel = (rootCertificate, intermediateChain, name, privatekey) => ({
   rootCertificate,
   intermediateChain,
+  privatekey, // custom
   name,
 });
 
@@ -33,6 +35,7 @@ export const getHubExternalCaModel = createSelector(
   getHubExternalCaRootCertificate,
   getHubExternalCaIntermediateChain,
   getHubExternalCaName,
+  getHubExternalCaPrivateKey,
   buildHubExternalCaModel
 );
 
@@ -50,6 +53,7 @@ const getHubExternalCaValidation = createSelector(
   getHubExternalCaNameInUniq,
   getHubExternalCaRootCertificate,
   getHubExternalCaIntermediateChain,
+  getHubExternalCaPrivateKey, // custom
   getHubExternalCaValidators
 );
 

@@ -76,13 +76,12 @@ export const getHubDfspCsrsCertificateUploadModalEnrollmentId = state =>
     state.hub.tls.client.dfsps.hubDfspCsrsCertificateUploadModalEnrollmentId;
 
 export const getHubDfspCsrsCertificateUploadModalCas = createSelector(
-    state => state.hub.ca.external.hubExternalCertificates,
-    caCertificates =>
-    caCertificates
-    //.map(({ id, name }) => ({
-    //    label: name,
-    //    value: id,
-    //}))
+  state => state.hub.ca.external.hubExternalCertificates,
+  caCertificates =>
+    (caCertificates || []).map(({ id, name }) => ({ // custom
+      label: name,
+      value: id,
+    }))
 );
 
 const buildCertificateUploadModel = (certificate, hubCAId) => ({ certificate, hubCAId });
