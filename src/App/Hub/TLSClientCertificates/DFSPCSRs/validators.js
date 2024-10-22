@@ -2,7 +2,7 @@ import { createValidation, vd } from '@modusbox/modusbox-ui-components/dist/redu
 
 const getHubDfspCsrsCertificateModalUploadValidation = () => ({
   certificate: createValidation([vd.isRequired]),
-  hubCAId: createValidation([vd.isRequired]),
+  // hubCAId: createValidation([vd.isRequired]), // custom
 });
 
 export { getHubDfspCsrsCertificateModalUploadValidation };

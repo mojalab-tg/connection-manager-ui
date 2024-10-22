@@ -162,7 +162,7 @@ const endpoints = {
   inboundEnrollmentCertificate: {
     service: services.connectionManager,
     url: ({ dfspId, enrollmentId }) =>
-      `/dfsps/${dfspId}/enrollments/inbound/${enrollmentId}/certificate`,
+      `/dfsps/${dfspId}/enrollments/inbound/`, // ${enrollmentId}/certificate custom
   },
   outboundEnrollments: {
     service: services.connectionManager,

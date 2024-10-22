@@ -75,7 +75,7 @@ export const submitCertificateHubDfspCsr = () => async (dispatch, getState) => {
   const dfspId = getHubDfspCsrsCertificateUploadModalDfspId(getState());
   const enrollmentId = getHubDfspCsrsCertificateUploadModalEnrollmentId(getState());
   const { data, status } = await dispatch(
-    api.inboundEnrollmentCertificate.create({ dfspId, enrollmentId, body: model })
+    api.inboundEnrollmentCertificate.create({ dfspId, enrollmentId, body: {...model, clientCSR: model.certificate} })
   );
   if (is200(status)) {
     dispatch(showSuccessToast());
